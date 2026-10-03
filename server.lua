@@ -111,6 +111,24 @@ local function VehicleExists(team)
     return team.vehicle ~= nil and DoesEntityExist(team.vehicle)
 end
 
+-- A Pounder counts as lost when it is gone or has been a wreck for a few
+-- consecutive ticks (an explosion sets the engine health to -4000)
+local WRECK_CONFIRM_TICKS = 3
+
+local function IsPounderLost(team)
+    if not VehicleExists(team) then
+        return true
+    end
+
+    if GetVehicleEngineHealth and GetVehicleEngineHealth(team.vehicle) <= Config.WreckEngineHealth then
+        team.wreckTicks = (team.wreckTicks or 0) + 1
+    else
+        team.wreckTicks = 0
+    end
+
+    return team.wreckTicks >= WRECK_CONFIRM_TICKS
+end
+
 local function DeleteVehicles()
     for _, team in pairs(State.teams) do
         if VehicleExists(team) then
@@ -367,10 +385,10 @@ end
 
 -- Active phase checks, runs every second
 local function TickActive(now)
-    -- Destroyed / deleted Pounders
+    -- Destroyed (wrecked) or deleted Pounders
     local lostCount = 0
     for _, team in pairs(State.teams) do
-        if not team.lost and not VehicleExists(team) then
+        if not team.lost and IsPounderLost(team) then
             team.lost = true
             NotifyParticipants(_L('pounder_lost', team.label))
         end
@@ -435,7 +453,7 @@ RegisterNetEvent('atl:server:deliver', function()
     if not teamKey then return end
 
     local team = State.teams[teamKey]
-    if not VehicleExists(team) then return end
+    if team.lost or not VehicleExists(team) then return end
 
     local xPlayer = ESX.GetPlayerFromId(src)
     if not xPlayer or xPlayer.job.name ~= team.job then return end

@@ -57,6 +57,10 @@ Config.DeliveryRadius = 10.0     -- delivery zone around the enemy base
 Config.DeliveryTolerance = 3.0   -- extra server-side tolerance for position sync lag
 Config.LootDistance = 5.0        -- distance to the Pounder to open the trunk
 
+-- A Pounder whose engine health stays at or below this value counts as destroyed
+-- (an explosion sets it to -4000; raise it, e.g. to 0, to count a dead engine as destroyed)
+Config.WreckEngineHealth = -3999.0
+
 -- How often Pounder positions are pushed to the participants' map (milliseconds, min. 1000)
 Config.BlipUpdateInterval = 2000
 
