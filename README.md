@@ -22,6 +22,8 @@ Faction vs faction Pounder delivery event for **ESX Legacy** and **ox_inventory*
 
 Requires [es_extended](https://github.com/esx-framework/esx_core), [ox_inventory](https://github.com/overextended/ox_inventory) and OneSync.
 
+Download `atl.zip` from the [latest release](https://github.com/7danee/atl/releases/latest) or clone the repo:
+
 ```bash
 git clone https://github.com/7danee/atl.git
 ```
