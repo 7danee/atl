@@ -120,6 +120,9 @@ RegisterNetEvent('atl:client:pounderPositions', function(positions)
 end)
 
 RegisterNetEvent('atl:client:pounderDisabled', function(netId)
+    -- The scenario is decided, no further delivery prompts for anyone
+    ownNetId = nil
+
     if not NetworkDoesNetworkIdExist(netId) then return end
 
     local vehicle = NetworkGetEntityFromNetworkId(netId)

@@ -312,7 +312,7 @@ local function SpawnPounders()
         TriggerClientEvent('atl:client:pounders', src, State.teams[teamKey].netId)
     end
 
-    NotifyParticipants(_L('pounder_spawned', Config.PounderMoveTime, Config.PounderMoveDistance))
+    NotifyParticipants(_L('pounder_spawned', Config.PounderMoveTime, ('%g'):format(Config.PounderMoveDistance)))
     NotifyParticipants(_L('deliver'))
 end
 
@@ -440,7 +440,7 @@ RegisterNetEvent('atl:server:deliver', function()
     local xPlayer = ESX.GetPlayerFromId(src)
     if not xPlayer or xPlayer.job.name ~= team.job then return end
 
-    -- The sender must be the driver of his own team's Pounder ...
+    -- The sender must be the driver of their own team's Pounder ...
     if GetPedInVehicleSeat(team.vehicle, -1) ~= GetPlayerPed(src) then return end
 
     -- ... and the Pounder must be inside the enemy delivery zone
