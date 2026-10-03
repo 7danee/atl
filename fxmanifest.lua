@@ -4,7 +4,7 @@ lua54 'yes'
 
 author '7danee'
 description 'ATL (Auftragslieferung) - faction vs faction Pounder delivery event'
-version '2.0.0'
+version '2.0.1'
 
 shared_scripts {
     '@es_extended/imports.lua',
